@@ -44,7 +44,8 @@ list_wood_ethereal = {
    "ethereal:palm_wood",
    "ethereal:redwood_wood",
    "ethereal:willow_wood",
-   "ethereal:yellow_wood"  }
+   "ethereal:yellow_wood",
+   "ethereal:bamboo_floor"  }
 
 
 list_wood_maple = { 
