@@ -17,13 +17,18 @@ list_default =    {
    "default:brick",
    "default:stone",
    "default:sandstone",
-   "default:obsidian_glass"  }
+   "default:obsidian_glass",
+   "default:dirt" }
 
 list_moreblocks = {
    "moreblocks:cactus_brick",
    "moreblocks:coal_stone_bricks",
    "moreblocks:grey_bricks",
-   "moreblocks:iron_stone_bricks"}
+   "moreblocks:iron_stone_bricks",
+   "moreblocks:stone_tile" }
+
+list_ethereal = {
+   "ethereal:icebrick" }
 
 
 
@@ -82,6 +87,9 @@ end
 
 
 if minetest.get_modpath("ethereal") then
+   for _,name in pairs(list_ethereal) do
+      advtrains.register_platform(own_name,name)   
+   end
    for _,name in pairs(list_wood_ethereal) do
       advtrains.register_platform(own_name,name)   
    end
