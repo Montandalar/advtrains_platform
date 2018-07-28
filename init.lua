@@ -1,11 +1,10 @@
 -- all nodes that do not fit in any other category
--- Och_Noe
+-- Author:  Och_Noe
+-- Licence: LGPL 2.1 
 -- 
 
+
 local own_name = "advtrains_platform"
-
-
--- copied from advtrains and modified
 
 
 --  bricks
@@ -18,7 +17,8 @@ list_default =    {
    "default:stone",
    "default:sandstone",
    "default:obsidian_glass",
-   "default:dirt" }
+   "default:dirt",
+   "default:dirt_with_grass", }
 
 list_moreblocks = {
    "moreblocks:cactus_brick",
@@ -28,7 +28,8 @@ list_moreblocks = {
    "moreblocks:stone_tile" }
 
 list_ethereal = {
-   "ethereal:icebrick" }
+   "ethereal:icebrick",
+   "ethereal:bamboo_dirt" }
 
 
 
