@@ -18,7 +18,9 @@ list_default =    {
    "default:sandstone",
    "default:obsidian_glass",
    "default:dirt",
-   "default:dirt_with_grass", }
+   "default:dirt_with_grass", 
+   "default:desert_stone",
+   "default:desert_sandstone",}
 
 list_moreblocks = {
    "moreblocks:cactus_brick",
