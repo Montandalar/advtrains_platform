@@ -4,3 +4,4 @@ moreblocks?
 ethereal?
 maple?
 moreores?
+minetest_errata?

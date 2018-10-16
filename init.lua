@@ -7,7 +7,7 @@
 local own_name = "advtrains_platform"
 
 
---  bricks
+--  bricks / blocks
 
 list_default =    { 
    "default:desert_sandstone_brick",
@@ -20,7 +20,10 @@ list_default =    {
    "default:dirt",
    "default:dirt_with_grass", 
    "default:desert_stone",
-   "default:desert_sandstone",}
+   "default:desert_sandstone",
+-- added  2018-10-16    
+   "default:desert_sandstone_brick",
+}
 
 list_moreblocks = {
    "moreblocks:cactus_brick",
@@ -33,6 +36,14 @@ list_ethereal = {
    "ethereal:icebrick",
    "ethereal:bamboo_dirt" }
 
+
+-- added 2018-10-16
+list_errata= {
+   "minetest_errata:desert_sandstone_cobble",
+   "minetest_errata:mossy_stone_tile",
+   "minetest_errata:mossystone",
+   "minetest_errata:sandstone_cobble",
+   "minetest_errata:silver_sandstone_cobble", }
 
 
 --  wood
@@ -78,6 +89,13 @@ end
 
 if minetest.get_modpath("moreblocks") then
    for _,name in pairs(list_moreblocks) do
+      advtrains.register_platform(own_name,name)   
+   end
+end
+
+-- added 2018-10-16
+if minetest.get_modpath("minetest_errata") then
+   for _,name in pairs(list_errata) do
       advtrains.register_platform(own_name,name)   
    end
 end
