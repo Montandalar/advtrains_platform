@@ -23,6 +23,9 @@ list_default =    {
    "default:desert_sandstone",
 -- added  2018-10-16    
    "default:desert_sandstone_brick",
+-- added 2018-10-26
+   "default:cobble",
+
 }
 
 list_moreblocks = {
