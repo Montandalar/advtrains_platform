@@ -25,7 +25,6 @@ list_default =    {
    "default:desert_sandstone_brick",
 -- added 2018-10-26
    "default:cobble",
-
 }
 
 list_moreblocks = {
@@ -33,7 +32,11 @@ list_moreblocks = {
    "moreblocks:coal_stone_bricks",
    "moreblocks:grey_bricks",
    "moreblocks:iron_stone_bricks",
-   "moreblocks:stone_tile" }
+   "moreblocks:stone_tile", 
+-- added 2019-01-19
+   "moreblocks:split_stone_tile", 
+   "moreblocks:split_stone_tile_alt", 
+}
 
 list_ethereal = {
    "ethereal:icebrick",
