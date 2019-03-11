@@ -5,3 +5,4 @@ ethereal?
 maple?
 moreores?
 minetest_errata?
+technic?

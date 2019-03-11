@@ -89,6 +89,13 @@ list_moreores = {
 -- ?
 
 
+-- technic  - added 2019-03-11
+
+list_technic =  {
+	"technic:marble" }
+	
+
+
 for _,name in pairs(list_default) do
    advtrains.register_platform(own_name,name)   
 end
@@ -135,3 +142,14 @@ if minetest.get_modpath("moreores") then
       advtrains.register_platform(own_name,name)   
    end
 end
+
+
+if minetest.get_modpath("technic") then
+   for _,name in pairs(list_technic) do
+      advtrains.register_platform(own_name,name)
+   end
+end
+
+
+
+
