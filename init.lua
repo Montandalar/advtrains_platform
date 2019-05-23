@@ -152,4 +152,94 @@ end
 
 
 
+local woodpath_lengths = { 
+   { 5,10 },
+   { 5,20 },
+   { 5,25 },
+   { 10,10 },
+   { 10,20 },
+   { 10,25 },
+   { 20,20 },
+   { 20,25 },
+   { 25,25 },
+}
 
+local full_wood = "default:wood"
+local half_wood = "stairs:slab_wood"
+local adv_track = "advtrains:dtrack_placer"
+
+for _,lengths in pairs(woodpath_lengths) do
+   
+   local b = lengths[1]  --  "back"  in 1/10 nodes
+   local f = lengths[2]  --  "front" in 1/10 nodes   
+   
+   local h = string.format(":woodpath_track_%02d%02d",b,f)
+
+   minetest.register_node(own_name..h, {
+        tiles =  { "default_wood.png", },
+        drawtype = "nodebox",
+        paramtype = "light",
+	paramtype2 = "facedir",
+        node_box = {
+                type = "fixed",
+                fixed = {
+                        {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
+                }
+        },
+	groups = {choppy = 2, oddly_breakable_by_hand = 2,
+	          not_blocking_trains = 1},
+        sounds = default.node_sound_wood_defaults(),
+	on_place = minetest.rotate_node,
+	
+     })
+
+
+   local craft = { { "","","" } , { "","","" } , { "","","" } }
+   
+   craft[3][2] = adv_track
+  
+   for y = 2,1,-1
+   do
+      if (b>=5) and (f>=5) then
+	 b = b-5
+	 f = f-5
+	 craft[y][2] = full_wood
+      end
+   end
+
+   for y = 2,1,-1
+   do
+      if (b>=10) then
+	 b = b-10
+	 craft[y][1] = full_wood
+      elseif (b>=5) then
+	 b = b-5
+	 craft[y][1] = half_wood
+      end
+      if (f>=10) then
+	 f = f-10
+	 craft[y][3] = full_wood
+      elseif (f>=5) then
+	 f = f-5
+	 craft[y][3] = half_wood
+      end
+   end      
+
+--   if (b>0) or (f>0) then
+--      print(h.." b: "..b.." f: "..f)
+--   else
+--      t_aus = ""
+--      for y=1,3 do
+--	 for x=1,3 do
+--	    t_aus = t_aus .. craft[y][x] .. ", "
+--	 end
+--      end
+--      print(h..t_aus)
+--   end
+
+   minetest.register_craft({
+			      output = own_name..h,
+			      recipe = craft,
+			      replacements = { {adv_track,adv_track}, }
+			   })
+end
