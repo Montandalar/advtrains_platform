@@ -290,3 +290,20 @@ end
 
 end
 
+
+
+minetest.register_node(own_name..":version_node", {
+        description = own_name.." version node",
+        tiles = {own_name.."_version_node.png"},
+        groups = {cracky = 3,not_in_creative_inventory=1},
+     })
+
+minetest.register_craft({
+			   output = own_name..":version_node",
+			   recipe = { 
+			      { "advtrains_platform:platform_high_cobble" }, 
+			      { "advtrains_platform:platform_high_stone" },
+			      { adv_track },
+			   },
+			})
+
