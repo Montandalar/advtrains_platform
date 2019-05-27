@@ -164,32 +164,70 @@ local woodpath_lengths = {
    { 25,25 },
 }
 
-local full_wood = "default:wood"
-local half_wood = "stairs:slab_wood"
+local path_names = { "wood", "cobble" } 
+local tile_name  = { "default_wood.png" , "default_cobble.png"}
+local sound_name = { default.node_sound_wood_defaults() , default.node_sound_stone_defaults(), }
+local full_wood = { "default:wood", "default:cobble" }
+local half_wood = { "stairs:slab_wood" , "stairs:slab_cobble" }
 local adv_track = "advtrains:dtrack_placer"
+
+if minetest.get_modpath("moreblocks") then
+   table.insert(path_names, "tar" )
+   table.insert(tile_name, "moreblocks_tar.png" )
+   table.insert(sound_name, default.node_sound_stone_defaults() )
+   table.insert(full_wood,  "moreblocks:tar" )
+   table.insert(half_wood, "moreblocks:slab_tar" )
+end
+
+for nr = 1,#path_names do
 
 for _,lengths in pairs(woodpath_lengths) do
    
    local b = lengths[1]  --  "back"  in 1/10 nodes
    local f = lengths[2]  --  "front" in 1/10 nodes   
    
-   local h = string.format(":woodpath_track_%02d%02d",b,f)
+   local h = string.format(":"..path_names[nr] .."path_track_%02d%02d",b,f)
+   local h2 = string.format(":"..path_names[nr] .."path_track_narrow_%02d%02d",b,f)
 
-   minetest.register_node(own_name..h, {
-        tiles =  { "default_wood.png", },
-        drawtype = "nodebox",
-        paramtype = "light",
-	paramtype2 = "facedir",
-        node_box = {
-                type = "fixed",
-                fixed = {
-                        {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
-                }
-        },
-	groups = {choppy = 2, oddly_breakable_by_hand = 2,
-	          not_blocking_trains = 1},
-        sounds = default.node_sound_wood_defaults(),
-	on_place = minetest.rotate_node,
+   minetest.register_node(own_name..h, 
+			  {
+			     tiles =  { tile_name[nr], },
+			     drawtype = "nodebox",
+			     paramtype = "light",
+			     paramtype2 = "facedir",
+			     node_box = 
+				{
+				type = "fixed",
+				fixed = {
+				   --  schmal                    {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
+				   {-0.5, -0.5, b/-10, 0.5, -0.4, f/10}, 
+				}
+			     },
+			     groups = {choppy = 2, oddly_breakable_by_hand = 2,
+				not_blocking_trains = 1},
+			     sounds = sound_name[nr],
+			     on_place = minetest.rotate_node,
+	
+     })
+
+   minetest.register_node(own_name..h2, 
+			  {
+			     tiles =  { tile_name[nr], },
+			     drawtype = "nodebox",
+			     paramtype = "light",
+			     paramtype2 = "facedir",
+			     node_box = 
+				{
+				type = "fixed",
+				fixed = {
+				   {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
+				   
+				}
+			     },
+			     groups = {choppy = 2, oddly_breakable_by_hand = 2,
+				not_blocking_trains = 1},
+			     sounds = sound_name[nr],
+			     on_place = minetest.rotate_node,
 	
      })
 
@@ -203,7 +241,7 @@ for _,lengths in pairs(woodpath_lengths) do
       if (b>=5) and (f>=5) then
 	 b = b-5
 	 f = f-5
-	 craft[y][2] = full_wood
+	 craft[y][2] = full_wood[nr]
       end
    end
 
@@ -211,17 +249,17 @@ for _,lengths in pairs(woodpath_lengths) do
    do
       if (b>=10) then
 	 b = b-10
-	 craft[y][1] = full_wood
+	 craft[y][1] = full_wood[nr]
       elseif (b>=5) then
 	 b = b-5
-	 craft[y][1] = half_wood
+	 craft[y][1] = half_wood[nr]
       end
       if (f>=10) then
 	 f = f-10
-	 craft[y][3] = full_wood
+	 craft[y][3] = full_wood[nr]
       elseif (f>=5) then
 	 f = f-5
-	 craft[y][3] = half_wood
+	 craft[y][3] = half_wood[nr]
       end
    end      
 
@@ -242,4 +280,13 @@ for _,lengths in pairs(woodpath_lengths) do
 			      recipe = craft,
 			      replacements = { {adv_track,adv_track}, }
 			   })
+
+   minetest.register_craft({
+			      output = own_name..h2,
+			      recipe = { { own_name..h } },
+			   })
+
 end
+
+end
+
