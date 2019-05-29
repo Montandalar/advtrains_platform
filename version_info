@@ -1,14 +1,16 @@
 #!/bin/bash
 
-ls -1r *.lua *.txt | head -12 >.filelist
+find *.lua *.txt textures  -type f | fgrep -v textures/advtrains_platform_version_node.png | head -12 >.filelist
 
-echo "$(date --iso=m)  [$(basename "$(realpath . )")]" >.datelist
+echo -n "" >.datelist
 
 cat .filelist | while read line ; do
 	echo "$(date --iso=m -r ${line})  ${line}" >>.datelist
 done
 
-anytopnm .datelist >.image
+
+
+(echo "$(date --iso=m)  [$(basename "$(realpath . )")]" ; cat .datelist | sed 's/  textures/  t/' | sort -r ) | anytopnm >.image
 
 WIDTH=$(head -2 .image | tail -1 | awk '{ print $1 }')
 HEIGHT=$(head -2 .image | tail -1 | awk '{ print $2 }')

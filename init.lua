@@ -187,12 +187,14 @@ for nr = 1,#path_names do
       local f = lengths[2]  --  "front" in 1/10 nodes   
       
       local h = string.format(":"..path_names[nr] .."path_track_%02d%02d",b,f)
+      local d = string.format(path_names[nr] .."path %02d-%02d",b,f)
       local h2 = string.format(":"..path_names[nr] .."path_track_narrow_%02d%02d",b,f)
+      local d2 = string.format(path_names[nr] .."path (narrow) %02d-%02d",b,f)
 
       minetest.register_node(own_name..h, 
 			     {
 				tiles =  { tile_name[nr], },
-				description = h,
+				description = d,
 				drawtype = "nodebox",
 				paramtype = "light",
 				paramtype2 = "facedir",
@@ -213,7 +215,7 @@ for nr = 1,#path_names do
       minetest.register_node(own_name..h2, 
 			     {
 				tiles =  { tile_name[nr], },
-				description = h2,
+				description = d2,
 				drawtype = "nodebox",
 				paramtype = "light",
 				paramtype2 = "facedir",
