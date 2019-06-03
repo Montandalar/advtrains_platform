@@ -164,19 +164,27 @@ local woodpath_lengths = {
    { 25,25 },
 }
 
-local path_names = { "wood", "cobble" } 
-local tile_name  = { "default_wood.png" , "default_cobble.png"}
-local sound_name = { default.node_sound_wood_defaults() , default.node_sound_stone_defaults(), }
-local full_wood = { "default:wood", "default:cobble" }
-local half_wood = { "stairs:slab_wood" , "stairs:slab_cobble" }
+local path_names = { "wood", "cobble", "stonebrick" } 
+local tile_name  = { "default_wood.png" , "default_cobble.png", "default_stone_brick.png"}
+local sound_name = { default.node_sound_wood_defaults() , 
+	  	     default.node_sound_stone_defaults(), 
+		     default.node_sound_stone_defaults(), }
+local full_wood = { "default:wood", "default:cobble", "default:stonebrick" }
+local half_wood = { "stairs:slab_wood" , "stairs:slab_cobble", 
+                    "stairs:slab_stonebrick" }
 local adv_track = "advtrains:dtrack_placer"
 
 if minetest.get_modpath("moreblocks") then
    table.insert(path_names, "tar" )
+   table.insert(path_names, "stone tile" )
    table.insert(tile_name, "moreblocks_tar.png" )
+   table.insert(tile_name, "moreblocks_stone_tile.png" )
+   table.insert(sound_name, default.node_sound_stone_defaults() )
    table.insert(sound_name, default.node_sound_stone_defaults() )
    table.insert(full_wood,  "moreblocks:tar" )
+   table.insert(full_wood,  "moreblocks:stone_tile" )
    table.insert(half_wood, "moreblocks:slab_tar" )
+   table.insert(half_wood, "moreblocks:slab_stone_tile" )
 end
 
 for nr = 1,#path_names do
