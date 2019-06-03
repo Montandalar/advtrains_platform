@@ -194,9 +194,9 @@ for nr = 1,#path_names do
       local b = lengths[1]  --  "back"  in 1/10 nodes
       local f = lengths[2]  --  "front" in 1/10 nodes   
       
-      local h = string.format(":"..path_names[nr] .."path_track_%02d%02d",b,f)
+      local h = string.format(":"..path_names[nr]:gsub(" ","_") .."path_track_%02d%02d",b,f)
       local d = string.format(path_names[nr] .."path %02d-%02d",b,f)
-      local h2 = string.format(":"..path_names[nr] .."path_track_narrow_%02d%02d",b,f)
+      local h2 = string.format(":"..path_names[nr]:gsub(" ","_") .."path_track_narrow_%02d%02d",b,f)
       local d2 = string.format(path_names[nr] .."path (narrow) %02d-%02d",b,f)
 
       minetest.register_node(own_name..h, 
