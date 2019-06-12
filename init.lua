@@ -12,7 +12,9 @@ local own_name = "advtrains_platform"
 list_default =    { 
    "default:desert_sandstone_brick",
    "default:desert_stonebrick",
+   "default:silver_sandstone",
    "default:silver_sandstone_brick",
+   "default:silver_sandstone_block",
    "default:brick",
    "default:stone",
    "default:sandstone",
