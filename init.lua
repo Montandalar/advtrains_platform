@@ -166,44 +166,75 @@ local woodpath_lengths = {
    { 25,25 },
 }
 
-local path_names = { "wood", "cobble", "stonebrick" } 
-local tile_name  = { "default_wood.png" , "default_cobble.png", "default_stone_brick.png"}
-local sound_name = { default.node_sound_wood_defaults() , 
-	  	     default.node_sound_stone_defaults(), 
-		     default.node_sound_stone_defaults(), }
-local full_wood = { "default:wood", "default:cobble", "default:stonebrick" }
-local half_wood = { "stairs:slab_wood" , "stairs:slab_cobble", 
-                    "stairs:slab_stonebrick" }
+
+-- path crossing track 
+
+local snowdef = minetest.registered_nodes['default:snowblock']
+local node_sound_snow_default = nil
+if snowdef then
+   node_sound_snow_default = snowdef.sounds
+end
+
+-- nodelist
+
+nodelist = {}
+
+-- nodelist:insert( { name = "", tile = ".png", 
+--		   sound = ,
+--		   full = "", half = "" } )
+
+table.insert(nodelist,  { name = "wood", 
+		tile = "default_wood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:wood", 
+		half = "stairs:slab_wood" } )
+table.insert(nodelist,  { name = "cobble", 
+		tile = "default_cobble.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:cobble", 
+		half = "stairs:slab_cobble" } )
+table.insert(nodelist,  { name = "stonebrick", 
+		tile = "default_stone_brick.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:stonebrick", 
+		half = "stairs:slab_stonebrick" } )
+table.insert(nodelist, { name = "snow", tile = "default_snow.png", 
+		sound = node_sound_snow_default,
+		full = "default:snowblock", 
+		half = "stairs:slab_snowblock" } )
+
+
 local adv_track = "advtrains:dtrack_placer"
 
 if minetest.get_modpath("moreblocks") then
-   table.insert(path_names, "tar" )
-   table.insert(path_names, "stone tile" )
-   table.insert(tile_name, "moreblocks_tar.png" )
-   table.insert(tile_name, "moreblocks_stone_tile.png" )
-   table.insert(sound_name, default.node_sound_stone_defaults() )
-   table.insert(sound_name, default.node_sound_stone_defaults() )
-   table.insert(full_wood,  "moreblocks:tar" )
-   table.insert(full_wood,  "moreblocks:stone_tile" )
-   table.insert(half_wood, "moreblocks:slab_tar" )
-   table.insert(half_wood, "moreblocks:slab_stone_tile" )
+   table.insert(nodelist,  { name = "tar", 
+		   tile = "moreblocks_tar.png", 
+		   sound = default.node_sound_stone_defaults(),
+		   full = "moreblocks:tar", 
+		   half = "moreblocks:slab_tar" } )
+   table.insert(nodelist,  { name = "stone tile", 
+		   tile = "moreblocks_stone_tile.png", 
+		   sound = default.node_sound_stone_defaults(),
+		   full = "moreblocks:stone_tile", 
+		   half = "moreblocks:slab_stone_tile" } )
 end
 
-for nr = 1,#path_names do
+
+for _,entry in pairs(nodelist) do
 
    for _,lengths in pairs(woodpath_lengths) do
       
       local b = lengths[1]  --  "back"  in 1/10 nodes
       local f = lengths[2]  --  "front" in 1/10 nodes   
       
-      local h = string.format(":"..path_names[nr]:gsub(" ","_") .."path_track_%02d%02d",b,f)
-      local d = string.format(path_names[nr] .." level crossing %02d-%02d",b,f)
-      local h2 = string.format(":"..path_names[nr]:gsub(" ","_") .."path_track_narrow_%02d%02d",b,f)
-      local d2 = string.format(path_names[nr] .." level crossing (narrow) %02d-%02d",b,f)
+      local h = string.format(":"..entry.name:gsub(" ","_") .."path_track_%02d%02d",b,f)
+      local d = string.format(entry.name .." level crossing %02d-%02d",b,f)
+      local h2 = string.format(":"..entry.name:gsub(" ","_") .."path_track_narrow_%02d%02d",b,f)
+      local d2 = string.format(entry.name .." level crossing (narrow) %02d-%02d",b,f)
 
       minetest.register_node(own_name..h, 
 			     {
-				tiles =  { tile_name[nr], },
+				tiles =  { entry.tile, },
 				description = d,
 				drawtype = "nodebox",
 				paramtype = "light",
@@ -215,16 +246,17 @@ for nr = 1,#path_names do
 				      {-0.5, -0.5, b/-10, 0.5, -0.4, f/10}, 
 				   }
 				},
-				groups = {choppy = 2, oddly_breakable_by_hand = 2,
-				   not_blocking_trains = 1},
-				sounds = sound_name[nr],
+				groups = {choppy = 2, not_blocking_trains = 1,
+				   oddly_breakable_by_hand = 2,
+				   },
+				sounds = entry.sound,
 				on_place = minetest.rotate_node,
 				
 			     })
 
       minetest.register_node(own_name..h2, 
 			     {
-				tiles =  { tile_name[nr], },
+				tiles =  { entry.tile, },
 				description = d2,
 				drawtype = "nodebox",
 				paramtype = "light",
@@ -237,9 +269,10 @@ for nr = 1,#path_names do
 				      
 				   }
 				},
-				groups = {choppy = 2, oddly_breakable_by_hand = 2,
-				   not_blocking_trains = 1},
-				sounds = sound_name[nr],
+				groups = {choppy = 2, not_blocking_trains = 1,
+				   oddly_breakable_by_hand = 2,
+				   },
+				sounds = entry.sound,
 				on_place = minetest.rotate_node,
 				
 			     })
@@ -254,7 +287,7 @@ for nr = 1,#path_names do
 	 if (b>=5) and (f>=5) then
 	    b = b-5
 	    f = f-5
-	    craft[y][2] = full_wood[nr]
+	    craft[y][2] = entry.full
 	 end
       end
 
@@ -262,17 +295,17 @@ for nr = 1,#path_names do
       do
 	 if (b>=10) then
 	    b = b-10
-	    craft[y][1] = full_wood[nr]
+	    craft[y][1] = entry.full
 	 elseif (b>=5) then
 	    b = b-5
-	    craft[y][1] = half_wood[nr]
+	    craft[y][1] = entry.half
 	 end
 	 if (f>=10) then
 	    f = f-10
-	    craft[y][3] = full_wood[nr]
+	    craft[y][3] = entry.full
 	 elseif (f>=5) then
 	    f = f-5
-	    craft[y][3] = half_wood[nr]
+	    craft[y][3] = entry.half
 	 end
       end      
 
