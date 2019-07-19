@@ -7,6 +7,70 @@
 local own_name = "advtrains_platform"
 
 
+local function register_platform(on,preset)
+	local ndef=minetest.registered_nodes[preset]
+	if not ndef then 
+		minetest.log("warning", " register_platform couldn't find preset node "..preset)
+		return
+	end
+	local btex=ndef.tiles
+	if type(btex)=="table" then
+		btex=btex[1]
+	end
+	local desc=ndef.description or ""
+	local nodename=string.match(preset, ":(.+)$")
+	minetest.register_node(on..":platform_low_"..nodename, {
+		description = attrans("@1 Platform (low)", desc),
+		tiles = {btex.."^advtrains_platform.png", btex, btex, btex, btex, btex},
+		groups = {cracky = 1, not_blocking_trains = 1, platform=1},
+		sounds = default.node_sound_stone_defaults(),
+		drawtype = "nodebox",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.1, -0.1, 0.5,  0  , 0.5},
+				{-0.5, -0.5,  0  , 0.5, -0.1, 0.5}
+			},
+		},
+		paramtype2="facedir",
+		paramtype = "light",
+		sunlight_propagates = true,
+	})
+	minetest.register_node(on..":platform_high_"..nodename, {
+		description = attrans("@1 Platform (high)", desc),
+		tiles = {btex.."^advtrains_platform.png", btex, btex, btex, btex, btex},
+		groups = {cracky = 1, not_blocking_trains = 1, platform=2},
+		sounds = default.node_sound_stone_defaults(),
+		drawtype = "nodebox",
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5,  0.3, -0.1, 0.5,  0.5, 0.5},
+				{-0.5, -0.5,  0  , 0.5,  0.3, 0.5}
+			},
+		},
+		paramtype2="facedir",
+		paramtype = "light",
+		sunlight_propagates = true,
+	})
+	minetest.register_craft({
+		type="shapeless",
+		output = on..":platform_high_"..nodename.." 4",
+		recipe = {
+			"dye:yellow", preset, preset
+		},
+	})
+	minetest.register_craft({
+		type="shapeless",
+		output = on..":platform_low_"..nodename.." 4",
+		recipe = {
+			"dye:yellow", preset
+		},
+	})
+end
+
+
+
 --  bricks / blocks
 
 list_default =    { 
@@ -99,56 +163,56 @@ list_technic =  {
 
 
 for _,name in pairs(list_default) do
-   advtrains.register_platform(own_name,name)   
+   register_platform(own_name,name)   
 end
 
 if minetest.get_modpath("moreblocks") then
    for _,name in pairs(list_moreblocks) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
 end
 
 -- added 2018-10-16
 if minetest.get_modpath("minetest_errata") then
    for _,name in pairs(list_errata) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
 end
 
 
 
 for _,name in pairs(list_wood) do
-   advtrains.register_platform(own_name,name)   
+   register_platform(own_name,name)   
 end
 
 
 if minetest.get_modpath("ethereal") then
    for _,name in pairs(list_ethereal) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
    for _,name in pairs(list_wood_ethereal) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
 end
 
 
 if minetest.get_modpath("maple") then
    for _,name in pairs(list_wood_maple) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
 end
 
 
 if minetest.get_modpath("moreores") then
    for _,name in pairs(list_moreores) do
-      advtrains.register_platform(own_name,name)   
+      register_platform(own_name,name)   
    end
 end
 
 
 if minetest.get_modpath("technic") then
    for _,name in pairs(list_technic) do
-      advtrains.register_platform(own_name,name)
+      register_platform(own_name,name)
    end
 end
 
