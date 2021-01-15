@@ -74,7 +74,11 @@ list_wood_ethereal = {
    "ethereal:redwood_wood",
    "ethereal:willow_wood",
    "ethereal:yellow_wood",
-   "ethereal:bamboo_floor"  }
+   "ethereal:bamboo_floor",
+   -- added 2020-01-12
+   "ethereal:olive_wood",
+   "ethereal:sakura_wood",
+}
 
 
 list_wood_maple = { 
