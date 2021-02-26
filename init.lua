@@ -285,6 +285,13 @@ if minetest.get_modpath("moreblocks") then
 		   sound = default.node_sound_stone_defaults(),
 		   full = "moreblocks:stone_tile", 
 		   half = "moreblocks:slab_stone_tile" } )
+   -- added 2021-02-26
+   table.insert(nodelist,  { name = "stone tile alt", 
+		   tile = "moreblocks_split_stone_tile_alt.png", 
+		   sound = default.node_sound_stone_defaults(),
+		   full = "moreblocks:split_stone_tile_alt", 
+		   half = "moreblocks:slab_split_stone_tile_alt" } )
+
 end
 
 
