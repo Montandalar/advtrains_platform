@@ -91,6 +91,9 @@ list_default =    {
    "default:desert_sandstone_brick",
 -- added 2018-10-26
    "default:cobble",
+-- added 2021-04-04
+   "default:steelblock",
+
 }
 
 list_moreblocks = {
@@ -102,11 +105,14 @@ list_moreblocks = {
 -- added 2019-01-19
    "moreblocks:split_stone_tile", 
    "moreblocks:split_stone_tile_alt", 
+
 }
 
 list_ethereal = {
    "ethereal:icebrick",
-   "ethereal:bamboo_dirt" }
+   "ethereal:bamboo_dirt" 
+
+}
 
 
 -- added 2018-10-16
@@ -115,7 +121,9 @@ list_errata= {
    "minetest_errata:mossy_stone_tile",
    "minetest_errata:mossystone",
    "minetest_errata:sandstone_cobble",
-   "minetest_errata:silver_sandstone_cobble", }
+   "minetest_errata:silver_sandstone_cobble", 
+
+}
 
 
 --  wood
@@ -125,7 +133,9 @@ list_wood= {
    "default:aspen_wood",
    "default:junglewood",
    "default:pine_wood",
-   "default:wood"  }
+   "default:wood"  
+
+}
 
 
 list_wood_ethereal = {
@@ -140,6 +150,7 @@ list_wood_ethereal = {
    -- added 2020-01-12
    "ethereal:olive_wood",
    "ethereal:sakura_wood",
+
 }
 
 
@@ -147,11 +158,14 @@ list_wood_maple = {
    "maple:maple_wood"  }
 
 
-
 --  metal blocks
 
 list_moreores = {
-   "moreores:mithril_block" }
+   "moreores:mithril_block",
+   -- added 2021-04-04
+   "moreores:silver_block",
+
+ }
 
 
 -- wool
@@ -162,8 +176,20 @@ list_moreores = {
 -- technic  - added 2019-03-11
 
 list_technic =  {
-	"technic:marble" }
+	"technic:marble" 
+
+}
 	
+
+-- baked clay - added 2021-04-04
+-- only darker colours, or the yellow line will not be good visible
+-- currently only gray, because it does not create a colour contrast
+list_baked_clay =  {
+	"bakedclay:grey",
+	"bakedclay:dark_grey",
+
+}
+
 
 
 for _,name in pairs(list_default) do
@@ -216,6 +242,12 @@ end
 
 if minetest.get_modpath("technic") then
    for _,name in pairs(list_technic) do
+      register_platform(own_name,name)
+   end
+end
+
+if minetest.get_modpath("bakedclay") then
+   for _,name in pairs(list_baked_clay) do
       register_platform(own_name,name)
    end
 end
