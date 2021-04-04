@@ -93,6 +93,7 @@ list_default =    {
    "default:cobble",
 -- added 2021-04-04
    "default:steelblock",
+   "default:obsidianbrick",
 
 }
 
