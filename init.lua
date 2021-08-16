@@ -123,6 +123,8 @@ list_errata= {
    "minetest_errata:mossystone",
    "minetest_errata:sandstone_cobble",
    "minetest_errata:silver_sandstone_cobble", 
+-- added 2021-08-16
+   "minetest_errata:flint_block", 
 
 }
 
