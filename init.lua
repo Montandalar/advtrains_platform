@@ -181,7 +181,7 @@ list_moreores = {
 list_technic =  {
    "technic:marble" ,
    --added 2021-09-24
-   "moretrees:rubber_tree_planks".
+   "moretrees:rubber_tree_planks",
 }
 	
 
