@@ -7,3 +7,4 @@ maple?
 moreores?
 minetest_errata?
 technic?
+bakedclay?
