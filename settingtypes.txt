@@ -1,0 +1,6 @@
+# A comma-delimited list of nodenames to register even more platforms
+# The format is like: modname1:nodename1,modname2,nodename2
+advtrains_platform.register_platforms (Nodenames to register platforms for) string
+# A comma-delimited list of nodenames to register even more crossings
+# The format is like: modname1:nodename1,modname2,nodename2
+advtrains_platform.register_crossings (Nodenames to register crossing nodes for) string

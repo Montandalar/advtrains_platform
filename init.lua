@@ -5,6 +5,7 @@
 
 
 local own_name = "advtrains_platform"
+advtrains_platform = {}
 
 
 local register_platform = advtrains.register_platform
@@ -104,8 +105,10 @@ list_technic =  {
 	
 
 
-for _,name in pairs(list_default) do
-   register_platform(own_name,name)   
+if minetest.get_modpath("default") then
+    for _,name in pairs(list_default) do
+       register_platform(own_name,name)   
+    end
 end
 
 if minetest.get_modpath("moreblocks") then
@@ -189,54 +192,54 @@ nodelist = {}
 --		   sound = ,
 --		   full = "", half = "" } )
 
-table.insert(nodelist,  { name = "wood", 
-		tile = "default_wood.png", 
-		sound = default.node_sound_wood_defaults(),
-		full = "default:wood", 
-		half = "stairs:slab_wood" } )
-table.insert(nodelist,  { name = "cobble", 
-		tile = "default_cobble.png", 
-		sound = default.node_sound_stone_defaults(),
-		full = "default:cobble", 
-		half = "stairs:slab_cobble" } )
-table.insert(nodelist,  { name = "stonebrick", 
-		tile = "default_stone_brick.png", 
-		sound = default.node_sound_stone_defaults(),
-		full = "default:stonebrick", 
-		half = "stairs:slab_stonebrick" } )
-table.insert(nodelist, { name = "snow", tile = "default_snow.png", 
-		sound = node_sound_snow_default,
-		full = "default:snowblock", 
-		half = "stairs:slab_snowblock" } )
-
+if minetest.get_modpath("default") then
+    table.insert(nodelist,  { name = "wood", 
+            tile = "default_wood.png", 
+            sound = default and default.node_sound_wood_defaults() or nil,
+            full = "default:wood", 
+            half = "stairs:slab_wood" } )
+    table.insert(nodelist,  { name = "cobble", 
+            tile = "default_cobble.png", 
+            sound = default and default.node_sound_stone_defaults() or nil,
+            full = "default:cobble", 
+            half = "stairs:slab_cobble" } )
+    table.insert(nodelist,  { name = "stonebrick", 
+            tile = "default_stone_brick.png", 
+            sound = default and default.node_sound_stone_defaults() or nil,
+            full = "default:stonebrick", 
+            half = "stairs:slab_stonebrick" } )
+    table.insert(nodelist, { name = "snow", tile = "default_snow.png", 
+            sound = node_sound_snow_default,
+            full = "default:snowblock", 
+            half = "stairs:slab_snowblock" } )
+end
 
 local adv_track = "advtrains:dtrack_placer"
 
 if minetest.get_modpath("moreblocks") then
    table.insert(nodelist,  { name = "tar", 
 		   tile = "moreblocks_tar.png", 
-		   sound = default.node_sound_stone_defaults(),
+		   sound = default and default.node_sound_stone_defaults() or nil,
 		   full = "moreblocks:tar", 
 		   half = "moreblocks:slab_tar" } )
    table.insert(nodelist,  { name = "stone tile", 
 		   tile = "moreblocks_stone_tile.png", 
-		   sound = default.node_sound_stone_defaults(),
+		   sound = default and default.node_sound_stone_defaults() or nil,
 		   full = "moreblocks:stone_tile", 
 		   half = "moreblocks:slab_stone_tile" } )
    -- added 2021-02-26
    table.insert(nodelist,  { name = "stone tile alt", 
 		   tile = "moreblocks_split_stone_tile_alt.png", 
-		   sound = default.node_sound_stone_defaults(),
+		   sound = default and default.node_sound_stone_defaults() or nil,
 		   full = "moreblocks:split_stone_tile_alt", 
 		   half = "moreblocks:slab_split_stone_tile_alt" } )
 
 end
 
+local function register_crossing(entry)
 
-for _,entry in pairs(nodelist) do
-
-   for _,lengths in pairs(woodpath_lengths) do
-      
+    for _,lengths in pairs(woodpath_lengths) do
+  
       local b = lengths[1]  --  "back"  in 1/10 nodes
       local f = lengths[2]  --  "front" in 1/10 nodes   
       
@@ -246,119 +249,148 @@ for _,entry in pairs(nodelist) do
       local d2 = string.format(entry.name .." level crossing (narrow) %02d-%02d",b,f)
 
       minetest.register_node(own_name..h, 
-			     {
-				tiles =  { entry.tile, },
-				description = d,
-				drawtype = "nodebox",
-				paramtype = "light",
-				paramtype2 = "facedir",
-				node_box = 
-				   {
-				   type = "fixed",
-				   fixed = {
-				      {-0.5, -0.5, b/-10, 0.5, -0.4, f/10}, 
-				   }
-				},
-				groups = {choppy = 2, not_blocking_trains = 1,
-				   oddly_breakable_by_hand = 2,
-				   },
-				sounds = entry.sound,
-				on_place = minetest.rotate_node,
-				
-			     })
+             {
+            tiles =  { entry.tile, },
+            description = d,
+            drawtype = "nodebox",
+            paramtype = "light",
+            paramtype2 = "facedir",
+            node_box = 
+               {
+               type = "fixed",
+               fixed = {
+                  {-0.5, -0.5, b/-10, 0.5, -0.4, f/10}, 
+               }
+            },
+            groups = {choppy = 2, not_blocking_trains = 1,
+               oddly_breakable_by_hand = 2,
+               },
+            sounds = entry.sound,
+            on_place = minetest.rotate_node,
+            
+             })
 
       minetest.register_node(own_name..h2, 
-			     {
-				tiles =  { entry.tile, },
-				description = d2,
-				drawtype = "nodebox",
-				paramtype = "light",
-				paramtype2 = "facedir",
-				node_box = 
-				   {
-				   type = "fixed",
-				   fixed = {
-				      {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
-				      
-				   }
-				},
-				groups = {choppy = 2, not_blocking_trains = 1,
-				   oddly_breakable_by_hand = 2,
-				   },
-				sounds = entry.sound,
-				on_place = minetest.rotate_node,
-				
-			     })
+             {
+            tiles =  { entry.tile, },
+            description = d2,
+            drawtype = "nodebox",
+            paramtype = "light",
+            paramtype2 = "facedir",
+            node_box = 
+               {
+               type = "fixed",
+               fixed = {
+                  {-0.4, -0.5, b/-10, 0.4, -0.4, f/10}, 
+                  
+               }
+            },
+            groups = {choppy = 2, not_blocking_trains = 1,
+               oddly_breakable_by_hand = 2,
+               },
+            sounds = entry.sound,
+            on_place = minetest.rotate_node,
+            
+             })
 
 
-      local craft = { { "","","" } , { "","","" } , { "","","" } }
-      
-      craft[3][2] = adv_track
-      
-      for y = 2,1,-1
-      do
-	 if (b>=5) and (f>=5) then
-	    b = b-5
-	    f = f-5
-	    craft[y][2] = entry.full
-	 end
-      end
+    local craft = { { "","","" } , { "","","" } , { "","","" } }
+  
+    craft[3][2] = adv_track
 
-      for y = 2,1,-1
-      do
-	 if (b>=10) then
-	    b = b-10
-	    craft[y][1] = entry.full
-	 elseif (b>=5) then
-	    b = b-5
-	    craft[y][1] = entry.half
-	 end
-	 if (f>=10) then
-	    f = f-10
-	    craft[y][3] = entry.full
-	 elseif (f>=5) then
-	    f = f-5
-	    craft[y][3] = entry.half
-	 end
-      end      
+    for y = 2,1,-1 do
+        if (b>=5) and (f>=5) then
+            b = b-5
+            f = f-5
+            craft[y][2] = entry.full
+        end
+    end
 
-      --   if (b>0) or (f>0) then
-      --      print(h.." b: "..b.." f: "..f)
-      --   else
-      --      t_aus = ""
-      --      for y=1,3 do
-      --	 for x=1,3 do
-      --	    t_aus = t_aus .. craft[y][x] .. ", "
-      --	 end
-      --     end
-      --     print(h..t_aus)
-      --   end
+    for y = 2,1,-1 do
+        if (b>=10) then
+            b = b-10
+            craft[y][1] = entry.full
+        elseif (b>=5) then
+            b = b-5
+            craft[y][1] = entry.half
+        end
 
-      minetest.register_craft({
-				 output = own_name..h,
-				 recipe = craft,
-				 replacements = { {adv_track,adv_track}, }
-			      })
+        if (f>=10) then
+            f = f-10
+            craft[y][3] = entry.full
+        elseif (f>=5) then
+            f = f-5
+            craft[y][3] = entry.half
+        end
+    end      
 
-      minetest.register_craft({
-				 output = own_name..h2,
-				 recipe = { { own_name..h } },
-			      })
+  --   if (b>0) or (f>0) then
+  --      print(h.." b: "..b.." f: "..f)
+  --   else
+  --      t_aus = ""
+  --      for y=1,3 do
+  --	 for x=1,3 do
+  --	    t_aus = t_aus .. craft[y][x] .. ", "
+  --	 end
+  --     end
+  --     print(h..t_aus)
+  --   end
 
-   end
+    minetest.register_craft({
+             output = own_name..h,
+             recipe = craft,
+             replacements = { {adv_track,adv_track}, }
+              })
 
+    minetest.register_craft({
+             output = own_name..h2,
+             recipe = { { own_name..h } },
+              })
 
-   --  3 nodes long slope
+    end
+end
 
-   
+advtrains_platform.register_crossing = register_crossing
 
+for _,entry in pairs(nodelist) do
+    register_crossing(entry)
+end
 
+local nodenames
+nodenames = minetest.settings:get("advtrains_platform.register_platforms") or ""
+for node in nodenames:gmatch('([^,]+)') do --FIXME?: indices instead of gmatch?
+    print("BBB: ", tostring(node))
+    if minetest.registered_nodes[node] ~= nil then
+        local modname, nodename = node:match("^([%da-z_]+):([%da-z_]+)$")
+        print("CCC:", tostring(modname), tostring(nodename))
+        if modname ~= nil and nodename ~= nil then
+            register_platform(own_name, node)
+        end
+    end
 end
 
 
+nodenames = minetest.settings:get("advtrains_platform.register_crossings") or ""
+for itemstring in nodenames:gmatch('([^,]+)') do --FIXME?: indices instead of gmatch?
+    print("BBB: ", tostring(itemstring))
+    if minetest.registered_nodes[itemstring] ~= nil then
+        local modname, nodename = itemstring:match("^([%da-z_]+):([%da-z_]+)$")
+        print("CCC:", tostring(modname), tostring(nodename))
+        if modname ~= nil and nodename ~= nil then
+           register_crossing({
+               name = nodename, 
+               tile = minetest.registered_nodes[itemstring].tiles[1],
+               sound = minetest.registered_nodes[itemstring].sounds,
+               full = itemstring,
+               --full="moreblocks:split_stone_tile_alt", 
+               half = string.format("%s:slab_%s", modname, nodename),
+               --half=moreblocks:slab_split_stone_tile_alt"
+           })
+        end
+    end
+end
 
-
-
+--  TODO? 3 nodes long slope
 
 minetest.register_node(own_name..":version_node", {
         description = own_name.." version node",
@@ -374,4 +406,3 @@ minetest.register_craft({
 			      { adv_track },
 			   },
 			})
-
