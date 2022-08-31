@@ -8,3 +8,5 @@ moreores?
 minetest_errata?
 technic?
 bakedclay?
+australia?
+morebricks?
