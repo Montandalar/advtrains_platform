@@ -1,7 +1,6 @@
 -- all nodes that do not fit in any other category
--- Author:  Och_Noe
--- Licence: LGPL 2.1 
--- 
+-- Author:  Och_Noe, Montandalar/Blockhead, W3RQ01
+-- Licence: LGPL 2.1  
 
 
 local own_name = "advtrains_platform"
@@ -29,11 +28,17 @@ list_default =    {
    "default:desert_sandstone_brick",
 -- added 2018-10-26
    "default:cobble",
--- added 2021-04-04
+-- added 2021-03-07
+   "default:diamondblock",
+   "default:obsidianblock",
+   "default:mossycobble",
+-- added 2021-03-08
    "default:steelblock",
    "default:obsidianbrick",
-
-}
+-- added 2022-02-12
+   "default:copperblock",
+	
+} 
 
 list_moreblocks = {
    "moreblocks:cactus_brick",
@@ -43,15 +48,27 @@ list_moreblocks = {
    "moreblocks:stone_tile", 
 -- added 2019-01-19
    "moreblocks:split_stone_tile", 
-   "moreblocks:split_stone_tile_alt", 
-
-}
+   "moreblocks:split_stone_tile_alt",
+-- added 2021-04-06	
+   "moreblocks:coal_stone",
+   "moreblocks:iron_stone",	
+   "moreblocks:iron_checker",
+   "moreblocks:cactus_checker",
+   "moreblocks:coal_checker",
+   "moreblocks:tar",
+-- added 2022-02-12
+   "moreblocks:copperpatina",
+   "moreblocks:cobble_compressed",
+   "moreblocks:cobble_condensed",
+	
+} 
 
 list_ethereal = {
    "ethereal:icebrick",
-   "ethereal:bamboo_dirt" 
-
-}
+   "ethereal:bamboo_dirt",
+-- added 2021-05-26
+   "ethereal:blue_marble_tile",
+   "ethereal:blue_marble_bricks"}
 
 
 -- added 2018-10-16
@@ -60,11 +77,7 @@ list_errata= {
    "minetest_errata:mossy_stone_tile",
    "minetest_errata:mossystone",
    "minetest_errata:sandstone_cobble",
-   "minetest_errata:silver_sandstone_cobble", 
--- added 2021-08-16
-   "minetest_errata:flint_block", 
-
-}
+   "minetest_errata:silver_sandstone_cobble", }
 
 
 --  wood
@@ -74,9 +87,7 @@ list_wood= {
    "default:aspen_wood",
    "default:junglewood",
    "default:pine_wood",
-   "default:wood"  
-
-}
+   "default:wood"  }
 
 
 list_wood_ethereal = {
@@ -91,7 +102,6 @@ list_wood_ethereal = {
    -- added 2020-01-12
    "ethereal:olive_wood",
    "ethereal:sakura_wood",
-
 }
 
 
@@ -99,14 +109,12 @@ list_wood_maple = {
    "maple:maple_wood"  }
 
 
+
 --  metal blocks
 
 list_moreores = {
-   "moreores:mithril_block",
-   -- added 2021-04-04
-   "moreores:silver_block",
-
- }
+   "moreores:mithril_block", 
+   "moreores:silver_block", }
 
 
 -- wool
@@ -117,23 +125,54 @@ list_moreores = {
 -- technic  - added 2019-03-11
 
 list_technic =  {
-   "technic:marble" ,
-   --added 2021-09-24
-   "moretrees:rubber_tree_planks",
-}
-	
+	"technic:marble", 
+-- added 2021-04-06
+        "technic:marble_bricks",
+-- added 2021-04-09	
+        "technic:granite",}
 
--- baked clay - added 2021-04-04
--- only darker colours, or the yellow line will not be good visible
--- currently only gray, because it does not create a colour contrast
-list_baked_clay =  {
-	"bakedclay:grey",
-	"bakedclay:dark_grey",
+-- bakedclay  - added 2021-04-06
 
-}
+list_bakedclay =  {
+	"bakedclay:black", 
+        "bakedclay:dark_clay",
+        "bakedclay:red",
+        "bakedclay:blue",
+-- added 2021-04-09
+        "bakedclay:white",
+-- added 2022-07-22
+	"bakedclay:terracotta_black",
+-- added 2022-07-26
+	"bakedclay:terracotta_blue",
+	"bakedclay:terracotta_red",
+	"bakedclay:terracotta_violet",}
 
+-- australia - added 2022-07-20
 
+list_australia = {
+	"australia:lemon_eucalyptus_wood",
+	"australia:river_red_gum_wood",
+	"australia:scribbly_gum_wood",
+	"australia:huon_pine_wood",
+	"australia:grey_mangrove_wood",
+	"australia:mangrove_apple_wood",
+	"australia:stilted_mangrove_wood",
+	"australia:blue_gum_wood",
+	"australia:conclurry_box_wood",
+	"australia:coolabah_wood",
+	"australia:mulga_wood",
+	"australia:bluestone",
+	"australia:darwin_woollybutt_wood",}
 
+-- morebricks - added 2022-07-06
+
+list_morebricks = {
+	"morebricks:white",
+	"morebricks:whiteaged",
+	"morebricks:blue",
+	"morebricks:darkgrey",
+	"morebricks:black",}
+ 
 for _,name in pairs(list_default) do
    register_platform(own_name,name)   
 end
@@ -188,13 +227,29 @@ if minetest.get_modpath("technic") then
    end
 end
 
+
+-- added 2021-04-06
 if minetest.get_modpath("bakedclay") then
-   for _,name in pairs(list_baked_clay) do
-      register_platform(own_name,name)
+   for _,name in pairs(list_bakedclay) do
+      register_platform(own_name,name)   
    end
 end
 
 
+-- added 2022-07-20
+if minetest.get_modpath("australia") then
+   for _,name in pairs(list_australia) do
+      register_platform(own_name,name)   
+   end
+end
+
+
+-- added 2022-07-26
+if minetest.get_modpath("morebricks") then
+   for _,name in pairs(list_morebricks) do
+      register_platform(own_name,name)   
+   end
+end
 
 local woodpath_lengths = { 
    { 5,10 },
@@ -225,28 +280,87 @@ nodelist = {}
 --		   sound = ,
 --		   full = "", half = "" } )
 
-table.insert(nodelist,  { name = "wood", 
-		tile = "default_wood.png", 
-		sound = default.node_sound_wood_defaults(),
-		full = "default:wood", 
-		half = "stairs:slab_wood" } )
-table.insert(nodelist,  { name = "cobble", 
-		tile = "default_cobble.png", 
-		sound = default.node_sound_stone_defaults(),
-		full = "default:cobble", 
-		half = "stairs:slab_cobble" } )
+-- stone (WIP)
+
 table.insert(nodelist,  { name = "stonebrick", 
 		tile = "default_stone_brick.png", 
 		sound = default.node_sound_stone_defaults(),
 		full = "default:stonebrick", 
 		half = "stairs:slab_stonebrick" } )
+
+table.insert(nodelist,  { name = "desert stonebrick", 
+		tile = "default_desert_stone_brick.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:desert_stonebrick", 
+		half = "stairs:slab_desert_stonebrick" } )
+
+table.insert(nodelist,  { name = "cobble", 
+		tile = "default_cobble.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:cobble", 
+		half = "stairs:slab_cobble" } )
+
+table.insert(nodelist,  { name = "desert cobble", 
+		tile = "default_desert_cobble.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:desert_cobble", 
+		half = "stairs:slab_desert_cobble" } )
+
+table.insert(nodelist,  { name = "stone", 
+		tile = "default_stone.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:stone", 
+		half = "stairs:slab_stone" } )
+
+
+table.insert(nodelist,  { name = "desert stone", 
+		tile = "default_desert_stone.png", 
+		sound = default.node_sound_stone_defaults(),
+		full = "default:desert_stone", 
+		half = "stairs:slab_desert_stone" } )
+
+-- snow
+
 table.insert(nodelist, { name = "snow", tile = "default_snow.png", 
 		sound = node_sound_snow_default,
 		full = "default:snowblock", 
 		half = "stairs:slab_snowblock" } )
 
+-- wood
+
+table.insert(nodelist,  { name = "wood", 
+		tile = "default_wood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:wood", 
+		half = "stairs:slab_wood" } )
+
+table.insert(nodelist,  { name = "jungle wood", 
+		tile = "default_junglewood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:junglewood", 
+		half = "stairs:slab_junglewood" } )
+
+table.insert(nodelist,  { name = "aspen wood", 
+		tile = "default_aspen_wood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:aspen_wood", 
+		half = "stairs:slab_aspen_wood" } )
+		
+table.insert(nodelist,  { name = "acacia wood", 
+		tile = "default_acacia_wood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:acacia_wood", 
+		half = "stairs:slab_acacia_wood" } )
+
+table.insert(nodelist,  { name = "pine wood", 
+		tile = "default_pine_wood.png", 
+		sound = default.node_sound_wood_defaults(),
+		full = "default:pine_wood", 
+		half = "stairs:slab_pine_wood" } )
 
 local adv_track = "advtrains:dtrack_placer"
+
+-- moreblocks
 
 if minetest.get_modpath("moreblocks") then
    table.insert(nodelist,  { name = "tar", 
@@ -254,19 +368,17 @@ if minetest.get_modpath("moreblocks") then
 		   sound = default.node_sound_stone_defaults(),
 		   full = "moreblocks:tar", 
 		   half = "moreblocks:slab_tar" } )
+
    table.insert(nodelist,  { name = "stone tile", 
 		   tile = "moreblocks_stone_tile.png", 
 		   sound = default.node_sound_stone_defaults(),
 		   full = "moreblocks:stone_tile", 
 		   half = "moreblocks:slab_stone_tile" } )
-   -- added 2021-02-26
-   table.insert(nodelist,  { name = "stone tile alt", 
-		   tile = "moreblocks_split_stone_tile_alt.png", 
-		   sound = default.node_sound_stone_defaults(),
-		   full = "moreblocks:split_stone_tile_alt", 
-		   half = "moreblocks:slab_split_stone_tile_alt" } )
-
 end
+
+-- australia
+
+
 
 
 for _,entry in pairs(nodelist) do
